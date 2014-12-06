@@ -55,10 +55,12 @@ Usage
 -----
 Everything is done by just setting data attributes in the HTML.
 
-And a quick note: data attributes are used to _initialize_ the real element needed by the social site's JS.
-That means: after the document is loaded & lazySocial has run, changing the data attributes won't do anything.
+And a quick note: you can alter the attributes after the page loads if you so desire (if eager loading is not enabled)
+Just keep in mind that it won't change buttons that are already loaded.
 
-For example, if the page loaded with `data-style="horizontal"`, changing it to "vertical_count" after the page is loaded _will do nothing_. The 
+For example, if the page loaded with `data-style="vertical_count"` and the user hovered over Facebook, Facebook would render as the vertical count style. If you then changed it to `data-style="horizontal_count"` and then the user moused over Twitter, Twitter would render as the horizontal count style, but Facebook would remain the vertical count style, which would look weird.
+
+So use discretion.
 
 
 ## LazyLoader Settings ##
