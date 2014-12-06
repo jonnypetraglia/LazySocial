@@ -1,0 +1,17 @@
+.fb_iframe_widget[data-layout='box_count'] span,
+.fb_iframe_widget[data-layout='box_count'] iframe {
+    height: 3.875em !important;
+    width: 2.9375em !important;
+}
+
+.fb_iframe_widget[data-layout='button_count'] span,
+.fb_iframe_widget[data-layout='button_count'] iframe {
+    width: 76px !important; 
+    height: 20px !important;
+}
+
+.fb_iframe_widget[data-layout='button'] span,
+.fb_iframe_widget[data-layout='button'] iframe {
+    width: 47px !important; 
+    height: 20px !important;
+}
