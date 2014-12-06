@@ -93,3 +93,5 @@ Downsides
   * Twitter's 'data-counturl' is not settable because I'm getting sick of adding shit to the URL
     * if I add it I'll just introduce 'data-twitter-shortUrl'/'twitterShortUrl' & then set 'data-url' to that & 'data-counturl' to pageURL.
   * I have no idea what I'm doing when it comes to Google Analytics.
+  * Minified size is 3.2kb. Would love it if I could get it under 2kb.
+  * Facebook requires more CSS to fix it sometimes being invisible, but I'm not sure if that is my fault.
