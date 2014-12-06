@@ -14,13 +14,13 @@
       document.body.appendChild(script);
     }
 
-    function createPlaceholder(siteName, siteConfig, pageURL, eager) {
+    function createPlaceholder(siteName, siteConfig, url, eager) {
       var li = document.createElement('li');
       li.className = 'social-widget '+siteName+'-widget';
 
       if(!eager) {
         var placeholder = document.createElement('a');
-        placeholder.href = siteConfig.href+encodeURIComponent(pageURL);
+        placeholder.href = siteConfig.href+encodeURIComponent(url);
         placeholder.text = siteConfig.action;
         placeholder.className = "placeholder";
         li.appendChild(placeholder);
@@ -42,25 +42,8 @@
     var containers = document.getElementsByClassName('social-widgets');
     [].forEach.call(containers, function(list) {
 
-      var pageURL, locale, eager, facebookAppId, twitterVia, twitterRelated, twitterHashtags, twitterText, twitterDNT, buttonStyle, sitesToUse;
-
-      var readSetts = function() {
-        pageURL = list.getAttribute('data-href') || args.pageURL || document.URL,
-        locale = list.getAttribute('data-locale') || 'en_US',
-        eager = list.getAttribute('data-eager') || false,
-        facebookAppId = list.getAttribute('data-facebook-appId'),
-        twitterVia = list.getAttribute('data-twitter-via') || '',
-        twitterRelated = list.getAttribute('data-twitter-username') || '',
-        twitterHashtags = list.getAttribute('data-twitter-hashtags') || '',
-        twitterText = list.getAttribute('data-twitter-text') || '',
-        twitterDNT = list.getAttribute('data-twitter-dnt') || '',
-        buttonStyle = list.getAttribute('data-style') || 'horizontal',
-        sitesToUse = list.getAttribute('data-use').split('|');
-      };
-      readSetts();
-
+      var settings = {}, sitesToUse = list.getAttribute('data-use').split('|'), eager = list.getAttribute('data-eager');
       if(sitesToUse.length==0) return;
-
 
       var siteStyles = {
         vertical_count: {
@@ -82,38 +65,50 @@
           linkedin: ''
         }
       }
-      if(!siteStyles[buttonStyle]) {
-        console.log("Invalid social button style: " + buttonStyle);
-        buttonStyle = 'horizontal';
-      }
+
+      var readSetts = function() {
+        settings.url = list.getAttribute('data-href') ||  document.URL,
+        settings.locale = list.getAttribute('data-locale') || 'en_US',
+        settings.facebook = {appId: list.getAttribute('data-facebook-appId')};
+        settings.twitter = {};
+        ['via', 'related', 'hashtags', 'text', 'dnt'].forEach(function(attr) {
+          settings.twitter['data-twitter-'+attr] = list.getAttribute('data-twitter-'+attr) || ''
+        });
+        settings.style = siteStyles[list.getAttribute('data-style')] || siteStyles['horizontal'];
+      };
+      readSetts();
 
       var sites = {
         facebook:   {action: 'Like', 
-                     scriptURL: 'https://connect.facebook.net/'+locale+'/sdk.js#xfbml=1&appId='+facebookAppId+'&version=v2.0',
+                     scriptURL: 'https://connect.facebook.net/'+settings.locale+'/sdk.js#xfbml=1&appId='+settings.facebook.appId+'&version=v2.0',
                      scriptID: 'facebook-jssdk',
                      href: '//www.facebook.com/sharer/sharer.php?u=',
-                     real: function() {return '<div class="fb-like" '+siteStyles[buttonStyle].facebook+' data-href="'+pageURL+'" data-action="like" data-show-faces="false" data-share="false"></div>'}},
+                     real: function() {return '<div class="fb-like" '+settings.style.facebook+' data-href="'+settings.url+'" data-action="like" data-show-faces="false" data-share="false"></div>'}},
         google:     {action: '+1',
                      scriptURL: 'https://apis.google.com/js/plusone.js',
                      href: '//plus.google.com/_/+1/confirm?url=',
-                     real: function() {return '<div class="g-plusone" '+siteStyles[buttonStyle].google+' data-href="'+pageURL+'"></div>'}},
+                     real: function() {return '<div class="g-plusone" '+settings.style.google+' data-href="'+settings.url+'"></div>'}},
         twitter:    {action: 'Tweet',
                      scriptURL: 'https://platform.twitter.com/widgets.js',
                      scriptID: 'twitter-wjs',
-                     href: '//twitter.com/intent/tweet?related=' + twitterRelated + '&url=',
-                     real: function() {return '<a href="https://twitter.com/share" class="twitter-share-button" '+siteStyles[buttonStyle].twitter+' data-url="'+pageURL+'" data-lang="'+locale+'" data-related="'+twitterRelated+'" data-via="'+twitterVia+'" data-hashtags="'+twitterHashtags+'" data-text="'+twitterText+'" data-dnt="'+twitterDNT+'"></a>'}},
+                     href: '//twitter.com/intent/tweet?related=' + settings.twitter['data-twitter-related'] + '&url=',
+                     real: function() {
+                      var s = '<a href="https://twitter.com/share" class="twitter-share-button" '+settings.style.twitter+' data-url="'+settings.url+'" ';
+                      for(var attr in settings.twitter)
+                        s+= attr+'="'+settings.twitter[attr]+'" '
+                      s+= '></a>';
+                      return s;
+                      }},
+
         linkedin:   {action: 'Share',
                      scriptURL: 'https://platform.linkedin.com/in.js',
                      href: '//www.linkedin.com/shareArticle?mini=true&url=',
-                     real: function() {return '<script type="IN/Share" '+siteStyles[buttonStyle].linkedin+'data-url="'+pageURL+'"></script>'}}
+                     real: function() {return '<script type="IN/Share" '+settings.style.linkedin+'data-url="'+settings.url+'"></script>'}}
       };
 
       sitesToUse.forEach(function(name) {
-        if(!sites[name]) {
-          console.log("Invalid social site: " + name);
-          return;
-        }
-        var li = createPlaceholder(name, sites[name], pageURL, eager);
+        if(!sites[name]) return;
+        var li = createPlaceholder(name, sites[name], settings.url, eager);
         list.appendChild(li);
         if(eager) {
           readSetts();
@@ -125,7 +120,6 @@
             this.removeChild(this.childNodes[0]);
             if(ga) _gaq.push(['_trackEvent', 'Social', name.substr(0,1).toUpperCase()+name.substr(1), site.action]);
             readSetts();
-            console.log(sites[name].real());
             createReal(li, sites[name].real());
             loadScript(sites[name]);
           }
@@ -135,13 +129,12 @@
   }
 
   if(window.onload) {
-    var curronload = window.onload;
-    var newonload = function() {
-        curronload();
+    var curr = window.onload;
+    var mine = function() {
+        curr();
         lasySocial();
     };
-    window.onload = newonload;
-  } else {
+    window.onload = mine;
+  } else
       window.onload = lazySocial;
-  }
 })();
