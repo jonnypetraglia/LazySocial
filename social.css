@@ -61,7 +61,7 @@
     width: 57px;
 }
 .horizontal_count.google-widget .placeholder {
-    margin-top: -1px;
+    padding-top: 1px;
 }
 .horizontal_count.twitter-widget {
     width: 75px;
