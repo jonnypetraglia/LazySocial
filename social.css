@@ -1,58 +1,97 @@
 
 .social-widgets {
-    float: right;
+    /* float: right; */
     list-style: none;
     margin: 0;
-    font: 1em/1.5em 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Segoe WP', sans-serif;
+    font: 1em/1em 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Segoe WP', sans-serif;
     font-weight: bold;
 }
 .social-widget {
     float: left;
-    /*margin-left: 0.5em; /* 8px */
 }
 .facebook-widget {
-    height: 3.875em; /* 62px */
-    width: 2.9375em; /* 47px */
-
     background: #3b5b99;
     background-color: rgba(59, 91, 153, 0.4);
+    width: 47px;
+    height: 20px;
 }
 .google-widget {
-    height: 3.80em; /* 61px */
-    padding-top: 0.0625em; /* 1px */
-    width: 3.125em; /* 50px */
-
     background-color: rgba(221, 75, 57, 0.4);
+    width: 32px;
+    height: 20px;
 }
 .twitter-widget {
-    height: 3.875em; /* 62px */
-    width: 3.375em; /* 56px */
-
     background-color: rgba(51, 204, 255, 0.4);
+    width: 55px;
+    height: 20px;
 }
 .linkedin-widget {
-    width: 3.75em; /* 60px */
-    height: 3.90em; /* 64px */
-
     background-color: rgba(71, 117, 180, 0.4);
+    width: 61px;
+    height: 20px;
 }
+
 .social-widgets .placeholder {
     color: #ffffff;
     display: block;
-    line-height: 3.875em; /* 62px */
     text-align: center;
     text-decoration: none;
+    height: 100%;
 }
 .facebook-widget .placeholder {
     background: #3b5b99;
 }
 .google-widget .placeholder {
     background: #dd4b39;
-    margin-top: -0.0625em; /* 1px */
 }
 .twitter-widget .placeholder {
     background: #33ccff;
 }
 .linkedin-widget .placeholder{
     background: #4875B4;
+}
+
+
+.horizontal_count.facebook-widget {
+    height: 20px;
+    width: 75px;
+}
+.horizontal_count.google-widget {
+    height: 20px;
+    width: 57px;
+}
+.horizontal_count.google-widget .placeholder {
+    margin-top: -1px;
+}
+.horizontal_count.twitter-widget {
+    width: 75px;
+    height: 20px;
+}
+.horizontal_count.linkedin-widget {
+    width: 90px;
+    height: 20px;
+}
+.horizontal_count.linkedin-widget > div {
+    margin-right: -5px;
+}
+
+.vertical_count.facebook-widget {
+    width: 47px;
+    height: 62px;
+    line-height: 62px;
+}
+.vertical_count.google-widget {
+    width: 50px;
+    height: 62px;
+    line-height: 62px;
+}
+.vertical_count.twitter-widget {
+    width: 55px;
+    height: 62px;
+    line-height: 62px;
+}
+.vertical_count.linkedin-widget {
+    width: 61px;
+    height: 62px;
+    line-height: 62px;
 }

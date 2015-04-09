@@ -14,9 +14,9 @@
       document.body.appendChild(script);
     }
 
-    function createPlaceholder(siteName, siteConfig, url, eager) {
+    function createPlaceholder(siteName, siteConfig, url, style, eager) {
       var li = document.createElement('li');
-      li.className = 'social-widget '+siteName+'-widget';
+      li.className = 'social-widget '+siteName+'-widget ' + style;
 
       if(!eager) {
         var placeholder = document.createElement('a');
@@ -108,7 +108,7 @@
 
       sitesToUse.forEach(function(name) {
         if(!sites[name]) return;
-        var li = createPlaceholder(name, sites[name], settings.url, eager);
+        var li = createPlaceholder(name, sites[name], settings.url, list.getAttribute('data-style'), eager);
         list.appendChild(li);
         if(eager) {
           readSetts();

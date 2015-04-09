@@ -10,6 +10,21 @@ include social share buttons that don't slow the page load time.
 
 Add a _single_ `ul` tag. Include the JS. Done.
 
+In addition to offering lazy loading, LazySocial also:
+
+  * Inserts the HTML tags that each site requires in addition to their JS
+  * Lets you set the style that _all_ buttons will be.
+  * Does not attempt to style anything; it just handles inserting.
+  * Automagically handles Google Analytics stuffs for when the buttons are
+    loaded via hover.
+  * Also provides a straightup link to share as well, meaning it will work on
+    mobile!
+  * Has NO external libraries! Pure vanilla JS, baby!
+
+
+All that, and all you have to do is write _one_ HTML tag!
+
+
 
 Special thanks to: [Taylor Fausak](http://taylor.fausak.me/2012/05/31/better-social-widget-lazy-loading). I took what you did and ran with it.
 
@@ -31,6 +46,8 @@ you can just use the "social.css" that I wrote for the sample HTML page.
 
 ### LazySocial Configuration ###
 
+  * `style` - The style for all buttons to follow:
+              `horizontal`, `horizontal_count`, or `vertical_count`
   * `href` - The URL to pass to the sites to share; defaults to the current
              page's address
   * `eager` - Loads the buttons on page load instead of on mouseover
@@ -76,6 +93,14 @@ social buttons, just set the `data-eager="true"` and the buttons will be loaded
 when the page loads.
 
 
+#### Per-style CSS ####
+
+If you need to style each button differently, LazySocial gives them a class
+for what type of style they are; a vertical_count would have "vertical_count".
+The "social.css" might be a good place to start; it has all the sizes for the
+various styes.
+
+
 Downsides
 ---------
   * Does not degrade gracefully if JS is not enabled.
@@ -111,19 +136,3 @@ something that the user might never even interact with.
 
 So by lazy loading, you only fetch them when you need to, and only the ones that
 the user is interested in. Pretty nifty.
-
-
-In addition to that, LazySocial also:
-
-  * Inserts the HTML tags that each site requires in addition to their JS.
-  * Lets you set the style (horizontal, horizontal_count, or vertical_count)
-    that _all_ buttons will be.
-  * Does not attempt to style anything; it just handles inserting.
-  * Automagically handles Google Analytics stuffs for when the buttons are
-    loaded via hover.
-  * Also provides a straightup link to share as well, meaning it will work on
-    mobile!
-  * Has NO external libraries! Pure vanilla JS, baby!
-
-
-All that, and all you have to do is write _one_ HTML tag!
